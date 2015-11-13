@@ -4,6 +4,13 @@ $icon-font-path: '../fonts/';
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+//bower:css
+@import "bower_components/bootstrap-material-design/dist/css/material-fullpalette";
+@import "bower_components/bootstrap-material-design/dist/css/material";
+@import "bower_components/bootstrap-material-design/dist/css/ripples";
+@import "bower_components/bootstrap-material-design/dist/css/roboto";
+// endbower
+
 .browserupgrade {
   margin: 0.2em 0;
   background: #ccc;
