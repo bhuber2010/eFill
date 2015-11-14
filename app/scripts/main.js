@@ -1,7 +1,8 @@
-console.log('\'Allo \'Allo!');
+console.log("\'Allo \'Allo!");
 $(function() {
-  $('#get-started').on("click",function(){
-    $('.jumbotron').css("display","none")
+  // Remove welcome and display everything else(this part needs to be added)
+  $("#get-started").on("click",function(){
+    $(".jumbotron").css("display","none")
   })
 
 })
