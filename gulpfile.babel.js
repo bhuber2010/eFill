@@ -46,7 +46,7 @@ gulp.task('html', ['styles'], () => {
 
   return gulp.src('app/*.html')
     .pipe(assets)
-    .pipe($.if('*.js', $.uglify()))
+    // .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
     .pipe(assets.restore())
     .pipe($.useref())
@@ -156,7 +156,8 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
+//put 'lint' back in this array when finishing up or run Gulp lint
+gulp.task('build', ['html', 'images', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 

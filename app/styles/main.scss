@@ -20,8 +20,12 @@ $icon-font-path: '../fonts/';
 
 /* Space out content a bit */
 body {
-  padding-top: 20px;
+  padding-top: 80px;
   padding-bottom: 20px;
+}
+
+.navbar-fixed-top {
+  margin-top: 10px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
