@@ -5,29 +5,32 @@ $(function() {
   })
 
   var searchInput = "5600+Greenwood+Plaza+Boulevard,+Greenwood+Village,+CO";
-  var searchDistance = 10;
+  var searchDistance = 1;
   var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"
 
-  var chargerCall =
+  var $chargerCall =
     $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput + "&key=" + googleKey, function(geoLocation) {
       console.log(geoLocation);
       var latLng = geoLocation.results[0].geometry.location;
       console.log(latLng.lat, latLng.lng);
+      return latLng;
     })
+
       .done(function(){
-        console.log("second success");
       })
+
       .fail(function(){
         console.log("error");
       })
-      .always(function() {
-        console.log("finished");
-      });
 
     //Take Geocoded address and send to Openchargemap.org api
-    chargerCall.always(function() {
-      $.get("chargerURL", function(){
+    $chargerCall.always(function() {
+      var latLng = $chargerCall.responseJSON.results[0].geometry.location,
+          lat = latLng.lat,
+          lng = latLng.lng;
 
+      $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles  ", function(chargersResult){
+        console.log(chargersResult);
 
       })
     });
