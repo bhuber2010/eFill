@@ -59,8 +59,36 @@
           <p><a class="btn btn-primary btn-lg" id="get-started">Get Plugged!</a></p>
       </div>
 
-      <div class="jumbotron">
-        <input type="text" class="form-control floating-label" data-hint="Write something cool here" placeholder="label">
+      <div class="well">
+        <form class="form-horizontal">
+          <fieldset class="">
+            <legend>Let's find some chargers!</legend>
+            <div class="form-group">
+              <input type="text" id="searchAddress" class="form-control floating-label" data-hint="Write something cool here" placeholder="Address">
+            </div>
+            <div class="">
+              <label for="distance" class="col-lg-2 control-label">Search Radius <span class="muted">(in miles)</span></label>
+              <select class="form-control" id="distance">
+                <option>1</option>
+                <option>5</option>
+                <option selected="selected">10</option>
+                <option>25</option>
+                <option>50</option>
+                <option>75</option>
+                <option>100</option>
+              </select>
+            <br>
+              <label for="charger-level" class="col-lg-2 control-label">Charging Level</label>
+              <select multiple="" class="form-control" id="charger-level">
+                <option>(All)</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+            </div>
+            <button id="findChargers" class="btn btn-primary btn-sm" type="button" href="javascript:void(0)">Find Chargers</button>
+          </fieldset>
+        </form>
       </div>
 
 
@@ -95,8 +123,8 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
-    <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
-    <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="/bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+    <script src="/bower_components/bootstrap-material-design/dist/js/material.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->

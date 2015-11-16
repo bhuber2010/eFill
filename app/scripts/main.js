@@ -4,36 +4,42 @@ $(function() {
     $("#welcome").css("display","none")
   })
 
-  var searchInput = "5600+Greenwood+Plaza+Boulevard,+Greenwood+Village,+CO";
-  var searchDistance = 1;
-  var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"
+  $("#findChargers").on("click", function(){
 
-  var $chargerCall =
-    $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput + "&key=" + googleKey, function(geoLocation) {
-      console.log(geoLocation);
-      var latLng = geoLocation.results[0].geometry.location;
-      console.log(latLng.lat, latLng.lng);
-      return latLng;
-    })
+    var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
 
-      .done(function(){
+    // "5600 Greenwood Plaza Boulevard, Greenwood+Village, CO"
+
+    var searchDistance = $("#distance").find(":selected").text();
+    var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"
+
+    var $chargerCall =
+      $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput + "&key=" + googleKey, function(geoLocation) {
+        console.log(geoLocation);
+        var latLng = geoLocation.results[0].geometry.location;
+        console.log(latLng.lat, latLng.lng);
+        return latLng;
       })
 
-      .fail(function(){
-        console.log("error");
-      })
+        .done(function(){
+        })
 
-    //Take Geocoded address and send to Openchargemap.org api
-    $chargerCall.always(function() {
-      var latLng = $chargerCall.responseJSON.results[0].geometry.location,
-          lat = latLng.lat,
-          lng = latLng.lng;
+        .fail(function(){
+          console.log("error");
+        })
 
-      $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles  ", function(chargersResult){
-        console.log(chargersResult);
+      //Take Geocoded address and send to Openchargemap.org api
+      $chargerCall.always(function() {
+        var latLng = $chargerCall.responseJSON.results[0].geometry.location,
+            lat = latLng.lat,
+            lng = latLng.lng;
 
-      })
-    });
+        $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles  ", function(chargersResult){
+          console.log(chargersResult);
 
+        })
+      });
+
+  })
 
 })
