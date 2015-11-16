@@ -1,7 +1,9 @@
 $(function() {
   // Remove welcome and display everything else(this part needs to be added)
   $("#get-started").on("click",function(){
-    $("#welcome").css("display","none")
+    $("#welcome").fadeOut("slow",function(){
+      $(".search-form").fadeIn("3000");
+    })
   })
 
   $("#findChargers").on("click", function(){
