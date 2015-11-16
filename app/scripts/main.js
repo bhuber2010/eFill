@@ -21,7 +21,7 @@ $(function() {
         console.log(latLng.lat, latLng.lng);
         // return latLng;
       })
-
+      
         .done(function(){
         })
 
@@ -39,6 +39,9 @@ $(function() {
           console.log(chargersResult);
 
         })
+          .fail(function(){
+            console.log("error");
+          })
       });
 
   })
