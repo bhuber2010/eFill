@@ -1,10 +1,4 @@
-var map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
-  });
-}
+
 
 $(function() {
 
@@ -19,7 +13,7 @@ $(function() {
     })
   })
 
-// Hides search options/filters and moves it to the top left
+// Hides search options/filters, moves it to the top left
 
   $("#findChargers").one("click",function(){
     $(".options, legend").hide("normal",function(){
@@ -27,14 +21,19 @@ $(function() {
         marginTop:  0,
         marginLeft: 0,
         maxWidth: "500px",
-      },500)
+      },800)
       .css({
         display:  "inline-block",
       });
       $(".form-group").css({
         marginBottom: 0,
       });
-    })
+    });
+    $("#map")
+      .delay(5000)
+      .css({
+        display: "inline-block",
+      })
   })
 
 // Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
@@ -70,7 +69,11 @@ $(function() {
         $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(chargersResult){
           console.log(chargersResult);
           var $locations = $(".locations");
-          $locations.empty();
+          $locations
+            .empty()
+            .css({
+              height: "76vh",
+            });
           $(chargersResult).map(function(){
             var source   = $("#charger-location").html();
             var template = Handlebars.compile(source);

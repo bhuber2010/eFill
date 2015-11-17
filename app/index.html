@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
+    <!-- build:js scripts/vendor/mapsGoogle.js -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw&callback=initMap"></script>
+    <!-- endbuild -->
+
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
@@ -125,7 +129,7 @@
     </script>
 
     <!-- build:js scripts/vendor.js -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw&callback=initMap"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script> -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <!-- endbower -->
@@ -152,6 +156,7 @@
 
     <!-- build:js scripts/main.js -->
     <script src="scripts/main.js"></script>
+    <script src="scripts/gMaps.js"></script>
     <!-- endbuild -->
   </body>
 </html>
