@@ -9,6 +9,7 @@ $(function() {
   $("#findChargers").on("click", function(){
 
     var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
+    // 5600 Greenwood Plaza Blvd, 80111
     var searchDistance = $("#distance").find(":selected").text();
     var searchLevels = $("#charger-level").val().toString();
     console.log(searchLevels);
@@ -21,7 +22,7 @@ $(function() {
         console.log(latLng.lat, latLng.lng);
         // return latLng;
       })
-      
+
         .done(function(){
         })
 
@@ -37,6 +38,19 @@ $(function() {
 
         $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(chargersResult){
           console.log(chargersResult);
+          var $locations = $(".locations");
+          $locations.empty();
+          $(chargersResult).map(function(){
+            var source   = $("#charger-location").html();
+            var template = Handlebars.compile(source);
+            var html = template(this);
+            return $locations.append(html);
+
+            console.log(this.AddressInfo.Title);
+            console.log(this.AddressInfo.AddressLine1);
+            console.log("Level " + this.Connections[0].LevelID);
+            console.log("Quantity " + this.Connections[0].Quantity);
+          })
 
         })
           .fail(function(){
