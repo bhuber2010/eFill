@@ -45,9 +45,6 @@ $(function() {
             var template = Handlebars.compile(source);
             var html = template(this);
             return $locations.append(html);
-
-            console.log(this.AddressInfo.Title);
-            console.log(this.AddressInfo.AddressLine1);
             console.log("Level " + this.Connections[0].LevelID);
             console.log("Quantity " + this.Connections[0].Quantity);
           })

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="description" content="">
@@ -11,6 +11,10 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <!-- <link href="bower_components/bootstrap-material-design/dist/css/material-fullpalette.css"> -->
+    <!-- <link href="bower_components/bootstrap-material-design/dist/css/material.css"> -->
+    <!-- <link href="bower_components/bootstrap-material-design/dist/css/ripples.css"> -->
+    <!-- <link href="bower_components/bootstrap-material-design/dist/css/roboto.css"> -->
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -92,6 +96,18 @@
         </form>
       </div>
 
+      <section class="locations"></section>
+      <script id="charger-location" type="text/x-handlebars-template">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">{{AddressInfo.Title}}</h3>
+          </div>
+          <div class="panel-body">
+              {{AddressInfo.AddressLine1}}
+          </div>
+        </div>
+      </script>
+
 
     </div>
   </div>
@@ -127,6 +143,8 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
     <script src="/bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <script src="/bower_components/bootstrap-material-design/dist/js/material.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->

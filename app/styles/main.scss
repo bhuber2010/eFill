@@ -22,6 +22,11 @@ $icon-font-path: '../fonts/';
 body {
   .container {
     margin-top: 15%;
+
+    .locations {
+      height: 400px;
+      overflow-y: scroll;
+    }
   }
 }
 
