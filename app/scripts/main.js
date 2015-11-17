@@ -1,10 +1,43 @@
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 8
+  });
+}
+
 $(function() {
-  // Remove welcome and display everything else(this part needs to be added)
+
+  var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw";
+  var searchForm = $(".search-form");
+
+// Remove welcome and display everything else(this part needs to be added)
+
   $("#get-started").on("click",function(){
     $("#welcome").fadeOut("slow",function(){
-      $(".search-form").fadeIn(800);
+      searchForm.fadeIn(800);
     })
   })
+
+// Hides search options/filters and moves it to the top left
+
+  $("#findChargers").one("click",function(){
+    $(".options, legend").hide("normal",function(){
+      $(".container").animate({
+        marginTop:  0,
+        marginLeft: 0,
+        maxWidth: "500px",
+      },500)
+      .css({
+        display:  "inline-block",
+      });
+      $(".form-group").css({
+        marginBottom: 0,
+      });
+    })
+  })
+
+// Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
 
   $("#findChargers").on("click", function(){
 
@@ -13,14 +46,10 @@ $(function() {
     var searchDistance = $("#distance").find(":selected").text();
     var searchLevels = $("#charger-level").val().toString();
     console.log(searchLevels);
-    var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw";
 
     var $chargerCall =
       $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput + "&key=" + googleKey, function(geoLocation) {
         console.log(geoLocation);
-        var latLng = geoLocation.results[0].geometry.location;
-        console.log(latLng.lat, latLng.lng);
-        // return latLng;
       })
 
         .done(function(){
@@ -31,10 +60,12 @@ $(function() {
         })
 
       //Take Geocoded address and send to Openchargemap.org api
+
       $chargerCall.always(function() {
         var latLng = $chargerCall.responseJSON.results[0].geometry.location,
             lat = latLng.lat,
             lng = latLng.lng;
+            console.log(lat, lng);
 
         $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(chargersResult){
           console.log(chargersResult);
@@ -57,5 +88,6 @@ $(function() {
       });
 
   })
+
 
 })

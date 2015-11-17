@@ -20,11 +20,15 @@ $icon-font-path: '../fonts/';
 
 /* Space out content a bit */
 body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
   .container {
     margin-top: 15%;
 
     .locations {
-      height: 400px;
+      height: 76vh;
       overflow-y: scroll;
     }
   }
@@ -71,6 +75,14 @@ body {
 
 .search-form {
   display: none;
+}
+
+#map {
+  display: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 90%;
+  width: 50vw;
 }
 
 /* Custom page footer */
