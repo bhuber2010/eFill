@@ -2,7 +2,7 @@ $(function() {
   // Remove welcome and display everything else(this part needs to be added)
   $("#get-started").on("click",function(){
     $("#welcome").fadeOut("slow",function(){
-      $(".search-form").fadeIn("3000");
+      $(".search-form").fadeIn(800);
     })
   })
 
@@ -44,7 +44,8 @@ $(function() {
             var source   = $("#charger-location").html();
             var template = Handlebars.compile(source);
             var html = template(this);
-            return $locations.append(html);
+            return $locations.append(html).hide().fadeIn(800);
+
             console.log("Level " + this.Connections[0].LevelID);
             console.log("Quantity " + this.Connections[0].Quantity);
           })
