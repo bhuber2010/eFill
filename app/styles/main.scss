@@ -20,8 +20,9 @@ $icon-font-path: '../fonts/';
 
 /* Space out content a bit */
 body {
-  padding-top: 80px;
-  padding-bottom: 20px;
+  .container {
+    margin-top: 15%;
+  }
 }
 
 .navbar-fixed-top {
@@ -47,6 +48,20 @@ body {
     line-height: 40px;
     padding-bottom: 19px;
   }
+}
+
+.welcome-img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  background-image: url("https://source.unsplash.com/category/nature/1920x1200");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding-top: 80px;
+  padding-bottom: 20px;
 }
 
 .search-form {
@@ -104,5 +119,11 @@ body {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+}
+
+@media (max-width: 960px) {
+  .welcome-img {
+    background-image: url("https://source.unsplash.com/category/nature/960x600");
   }
 }
