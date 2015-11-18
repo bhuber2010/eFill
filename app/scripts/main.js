@@ -68,6 +68,8 @@ $(function() {
             console.log(lat, lng);
 
         $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(){
+          console.log("Distance: " + searchDistance);
+          console.log("Charger Level: " + searchLevels);
         })
 
           .done(function(chargersResult){
