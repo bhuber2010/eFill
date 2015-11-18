@@ -119,23 +119,50 @@ $(function() {
 
   })
 
-// on click of star button, add charger location to favorites
+// On click of star button, add charger location to favorites
+
+  // var returnedFavs = [];
+  // var currentFavs = localStorage.getItem("favs");
+  // returnedFavs = JSON.parse(currentFavs);
+
+  var Favs = [];
 
   $(document).on("click",".mdi-action-grade",function(){
-      console.log(this);
-      var $selectedFav = $(this).closest(".panel");
+      // console.log(this);
+      $(this).addClass("fav");
+      var selectedFav = this.closest(".panel");
+      console.log(selectedFav);
+      var updatedFavs = Favs.push(selectedFav.innerHTML);
+      console.log(Favs);
+      var jsonFavs = JSON.stringify(Favs);
+      localStorage.setItem("favs",jsonFavs);
+      var currentFavs = localStorage.getItem("favs");
+      var returnedFavs = JSON.parse(currentFavs);
+      console.log(returnedFavs);
 
-      $(this).toggleClass("fav");
-      localStorage.setItem("fav1",$selectedFav);
+      // localStorage.removeItem("favs");
+      // localStorage.setItem("favs",jsonFavs);
+
   })
 
-  // $(".mdi-action-grade").on("click",function(){
-  //     console.log(this);
-  //     var $selectedFav = $(this).closest(".panel");
-  //
-  //     $(this).toggleClass("fav");
-  //     localStorage.setItem("fav1",$selectedFav);
-  // })
+// View list of Favs in dropdown
+
+
+
+  $("#favs-link").on("click",function(){
+    var currentFavs = localStorage.getItem("favs");
+    var returnedFavs = JSON.parse(currentFavs);
+    console.log(returnedFavs);
+    $(returnedFavs).map(function(){
+      var source   = $("#favs-list").html();
+      var template = Handlebars.compile(source);
+      var html = template(this);
+      return $(".favs-dropdown").append(html);
+    })
+  })
+
+
+
 
 
 })

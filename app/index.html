@@ -40,7 +40,14 @@
                 <li><a href="javascript:void(0)">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="javascript:void(0)">Favs</a></li>
+              <li class="dropdown">
+                <a href="bootstrap-elements.html" id="favs-link" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Favs<b class="caret"></b></a>
+                <ul class="dropdown-menu favs-dropdown">
+                    <script id="favs-list" type="text/x-handlebars-template">
+                      <li><a href="javascript:void(0)">{{{this}}}</a></li>
+                    </script>
+                </ul>
+              </li>
             </ul>
             <form class="navbar-form navbar-right">
               <input type="text" class="form-control col-lg-8" placeholder="Search">
@@ -98,7 +105,7 @@
         <div class="panel panel-primary">
           <div class="panel-heading charger-heading">
               <h3 class="panel-title">{{AddressInfo.Title}}</h3>
-              <a href="javascript:void(0)" class="btn btn-info btn-fab btn-raised mdi-action-grade fav"></a>
+              <a href="javascript:void(0)" class="btn btn-info btn-fab btn-raised mdi-action-grade"></a>
           </div>
           <div class="panel-body charger-info">
             <div class="address">
@@ -107,8 +114,8 @@
             </div>
             <div class="charger-details">
               Distance: {{AddressInfo.Distance}}<br>
-              Quantity: {{Connections.Level.Quantity}}<br>
-              {{Connections.Level.Title}}
+              Quantity: {{Connections.0.Quantity}}<br>
+              {{Connections.0.Level.Title}}
             </div>
           </div>
         </div>
