@@ -67,11 +67,11 @@ $(function() {
             lng = latLng.lng;
             console.log(lat, lng);
 
-        $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(chargersResult){
+        $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(){
         })
 
-          .done(function(chargersResult2){
-            console.log(chargersResult2);
+          .done(function(chargersResult){
+            console.log(chargersResult);
             var $locations = $(".locations");
             $locations
               .empty()
