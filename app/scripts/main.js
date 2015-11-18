@@ -43,8 +43,9 @@ $(function() {
     var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
     // 5600 Greenwood Plaza Blvd, 80111
     var searchDistance = $("#distance").find(":selected").text();
+    console.log("Distance: " + searchDistance);
     var searchLevels = $("#charger-level").val().toString();
-    console.log(searchLevels);
+    console.log("Charger Level: " + searchLevels);
 
     var $chargerCall =
       $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput + "&key=" + googleKey, function(geoLocation) {
