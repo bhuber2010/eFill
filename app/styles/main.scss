@@ -84,6 +84,12 @@ body {
   width: 50vw;
 }
 
+.charger-info {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
 /* Custom page footer */
 .footer {
   padding-top: 19px;

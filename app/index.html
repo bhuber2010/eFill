@@ -83,6 +83,12 @@
               </select>
             </div>
             <button id="findChargers" class="btn btn-primary btn-sm" type="button" href="javascript:void(0)">Find Chargers</button>
+            <div class="togglebutton pull-right">
+              <label>
+                Settings
+                <input type="checkbox" checked="">
+              </label>
+            </div>
             </div>
           </fieldset>
         </form>
@@ -94,8 +100,16 @@
           <div class="panel-heading">
               <h3 class="panel-title">{{AddressInfo.Title}}</h3>
           </div>
-          <div class="panel-body">
-              {{AddressInfo.AddressLine1}}
+          <div class="panel-body charger-info">
+            <div class="address">
+              {{AddressInfo.AddressLine1}}<br>
+              {{AddressInfo.Town}}, {{AddressInfo.StateOrProvince}}
+            </div>
+            <div class="charger-details">
+              Distance: {{AddressInfo.Distance}}<br>
+              Quantity: {{Connections.Level.Quantity}}<br>
+              {{Connections.Level.Title}}
+            </div>
           </div>
         </div>
       </script>
@@ -139,6 +153,8 @@
     <script src="/bower_components/bootstrap-material-design/dist/js/material.js"></script>
     <!-- endbuild -->
 
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.js"></script> -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
 

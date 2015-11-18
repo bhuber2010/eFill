@@ -4,6 +4,7 @@ $(function() {
 
   var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw";
   var searchForm = $(".search-form");
+  var $searchOptions = $(".options");
 
 // Remove welcome and display everything else(this part needs to be added)
 
@@ -36,6 +37,12 @@ $(function() {
       })
   })
 
+// Toggles search settings displaying or not
+
+  $(".togglebutton").on("click",function(){
+    $searchOptions.prop("checked", !$searchOptions.prop("checked"));
+  })
+
 // Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
 
   $("#findChargers").on("click", function(){
@@ -47,8 +54,11 @@ $(function() {
     var searchLevels = $("#charger-level").val().toString();
     console.log("Charger Level: " + searchLevels);
 
+    $searchOptions.fadeOut("slow");
+
     var $chargerCall =
-      $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput + "&key=" + googleKey, function(geoLocation) {
+      $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput +
+          "&key=" + googleKey, function(geoLocation) {
         console.log(geoLocation);
       })
 
@@ -67,9 +77,13 @@ $(function() {
             lng = latLng.lng;
             console.log(lat, lng);
 
-        $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(){
-          console.log("Distance: " + searchDistance);
-          console.log("Charger Level: " + searchLevels);
+        $.get("http://api.openchargemap.io/v2/poi/?output=json" +
+            "&countrycode=US" +
+            "&maxresults=" + 100 +
+            "&latitude=" + lat +
+            "&longitude=" + lng +
+            "&distance=" + searchDistance +
+            "&distanceunit=Miles&levelid=" + searchLevels, function(){
         })
 
           .done(function(chargersResult){
