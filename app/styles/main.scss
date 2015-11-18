@@ -29,7 +29,25 @@ body {
 
     .locations {
       overflow-y: scroll;
+
+      .charger-heading {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+
+        .fav:before {
+          color: rgb(214, 28, 206);
+        }
+      }
+
+      .charger-info {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+      }
     }
+
+
   }
 }
 
@@ -74,6 +92,15 @@ body {
 
 .search-form {
   display: none;
+
+  #distance-label {
+    margin-top: 4px;
+  }
+
+  #findChargers {
+    margin-top: 14px;
+    margin-bottom: 0;
+  }
 }
 
 #map {
@@ -82,12 +109,6 @@ body {
   padding-right: 15px;
   height: 90%;
   width: 50vw;
-}
-
-.charger-info {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
 }
 
 /* Custom page footer */

@@ -44,9 +44,10 @@ $(function() {
 
 // Toggles search settings displaying or not
 
-  $(".togglebutton").on("click",function(){
-    this.prop("checked", !this.prop("checked"));
-    $searchOptions.toggle();
+  $(".settings").on("click",function(){
+    // console.log($(this).prop("checked"));
+    // $(this).prop("checked", !$(this).prop("checked"));
+    $searchOptions.slideDown();
   })
 
 // Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
@@ -117,6 +118,24 @@ $(function() {
       });
 
   })
+
+// on click of star button, add charger location to favorites
+
+  $(document).on("click",".mdi-action-grade",function(){
+      console.log(this);
+      var $selectedFav = $(this).closest(".panel");
+
+      $(this).toggleClass("fav");
+      localStorage.setItem("fav1",$selectedFav);
+  })
+
+  // $(".mdi-action-grade").on("click",function(){
+  //     console.log(this);
+  //     var $selectedFav = $(this).closest(".panel");
+  //
+  //     $(this).toggleClass("fav");
+  //     localStorage.setItem("fav1",$selectedFav);
+  // })
 
 
 })

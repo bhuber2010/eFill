@@ -63,7 +63,7 @@
             <div class="form-group row">
               <input type="text" id="searchAddress" class="col-lg-12 form-control floating-label" data-hint="This can be in almost any format" placeholder="Address">
             <div class="options">
-              <label for="distance" class="col-lg-4 control-label">Search Radius <span class="text-muted">(in miles)</span></label>
+              <label id="distance-label" for="distance" class="col-lg-4 control-label">Search Radius <span class="text-muted">(in miles)</span></label>
               <select class="form-control" id="distance">
                 <option>1</option>
                 <option>5</option>
@@ -83,10 +83,9 @@
               </select>
             </div>
             <button id="findChargers" class="btn btn-primary btn-sm" type="button" href="javascript:void(0)">Find Chargers</button>
-            <div class="togglebutton pull-right">
+            <div class="checkbox pull-right settings">
               <label>
-                Settings
-                <input type="checkbox" checked="">
+                <input type="checkbox"> Settings
               </label>
             </div>
             </div>
@@ -97,8 +96,9 @@
       <section class="locations"></section>
       <script id="charger-location" type="text/x-handlebars-template">
         <div class="panel panel-primary">
-          <div class="panel-heading">
+          <div class="panel-heading charger-heading">
               <h3 class="panel-title">{{AddressInfo.Title}}</h3>
+              <a href="javascript:void(0)" class="btn btn-info btn-fab btn-raised mdi-action-grade fav"></a>
           </div>
           <div class="panel-body charger-info">
             <div class="address">
