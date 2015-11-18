@@ -2,6 +2,11 @@
 
 $(function() {
 
+// initilize Material Bootstrap
+  $.material.init();
+
+// Global variables
+
   var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw";
   var searchForm = $(".search-form");
   var $searchOptions = $(".options");
@@ -40,7 +45,8 @@ $(function() {
 // Toggles search settings displaying or not
 
   $(".togglebutton").on("click",function(){
-    $searchOptions.prop("checked", !$searchOptions.prop("checked"));
+    this.prop("checked", !this.prop("checked"));
+    $searchOptions.toggle();
   })
 
 // Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
