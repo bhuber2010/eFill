@@ -68,24 +68,27 @@ $(function() {
             console.log(lat, lng);
 
         $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=US&maxresults=" + 100 + "&latitude=" + lat + "&longitude=" + lng + "&distance=" + searchDistance + "&distanceunit=Miles&levelid=" + searchLevels, function(chargersResult){
-          console.log(chargersResult);
-          var $locations = $(".locations");
-          $locations
-            .empty()
-            .css({
-              height: "76vh",
-            });
-          $(chargersResult).map(function(){
-            var source   = $("#charger-location").html();
-            var template = Handlebars.compile(source);
-            var html = template(this);
-            return $locations.append(html).hide().fadeIn(800);
+        })
 
-            console.log("Level " + this.Connections[0].LevelID);
-            console.log("Quantity " + this.Connections[0].Quantity);
+          .done(function(chargersResult2){
+            console.log(chargersResult2);
+            var $locations = $(".locations");
+            $locations
+              .empty()
+              .css({
+                height: "76vh",
+              });
+            $(chargersResult).map(function(){
+              var source   = $("#charger-location").html();
+              var template = Handlebars.compile(source);
+              var html = template(this);
+              return $locations.append(html).hide().fadeIn(800);
+
+              console.log("Level " + this.Connections[0].LevelID);
+              console.log("Quantity " + this.Connections[0].Quantity);
+            })
           })
 
-        })
           .fail(function(){
             console.log("error");
           })
