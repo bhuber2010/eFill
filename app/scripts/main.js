@@ -28,17 +28,22 @@ $(function() {
         marginLeft: 0,
         maxWidth: "500px",
       },800)
-      .css({
-        display:  "inline-block",
-      });
+      // .css({
+      //   display:  "inline-block",
+      // });
       $(".form-group").css({
         marginBottom: 0,
       });
+      $(".flex-page").css({
+        display:        "flex",
+        flexWrap:       "wrap",
+        justifyContent: "space-between",
+      });
     });
     $("#map")
-      .delay(5000)
+      .delay(4000)
       .css({
-        display: "inline-block",
+        display: "inherit",
       })
   })
 

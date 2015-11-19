@@ -56,76 +56,76 @@
         </div>
       </div>
     </div>
-
-    <div class="container">
-      <div class="jumbotron" id="welcome">
-          <h1>eFill</h1>
-          <p>Wondering where charging stations are located to charge your electric car when you are out and about? Enter eFill, your one stop shop for your charging needs. <br> <span class="text-muted">Click below to plug-in.</span></p>
-          <p><a class="btn btn-primary btn-lg" id="get-started">Get Plugged!</a></p>
-      </div>
-
-      <div class="well search-form">
-        <form class="form-horizontal">
-          <fieldset>
-            <legend>Let's find some chargers!</legend>
-            <div class="form-group row">
-              <input type="text" id="searchAddress" class="col-lg-12 form-control floating-label" data-hint="This can be in almost any format" placeholder="Address">
-            <div class="options">
-              <label id="distance-label" for="distance" class="col-lg-4 control-label">Search Radius <span class="text-muted">(in miles)</span></label>
-              <select class="form-control" id="distance">
-                <option>1</option>
-                <option>5</option>
-                <option selected="selected">10</option>
-                <option>25</option>
-                <option>50</option>
-                <option>75</option>
-                <option>100</option>
-              </select>
-            <br>
-              <label for="charger-level" class="col-lg-4 control-label">Charging Level</label>
-              <select multiple="" class="form-control" id="charger-level">
-                <option value="1,2,3" selected="selected">(All)</option>
-                <option value="1">Level 1</option>
-                <option value="2">Level 2</option>
-                <option value="3">Level 3</option>
-              </select>
-            </div>
-            <button id="findChargers" class="btn btn-primary btn-sm" type="button" href="javascript:void(0)">Find Chargers</button>
-            <div class="checkbox pull-right settings">
-              <label>
-                <input type="checkbox"> Settings
-              </label>
-            </div>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-
-      <section class="locations"></section>
-      <script id="charger-location" type="text/x-handlebars-template">
-        <div class="panel panel-primary">
-          <div class="panel-heading charger-heading">
-              <h3 class="panel-title">{{AddressInfo.Title}}</h3>
-              <a href="javascript:void(0)" class="btn btn-info btn-fab btn-raised mdi-action-grade"></a>
-          </div>
-          <div class="panel-body charger-info">
-            <div class="address">
-              {{AddressInfo.AddressLine1}}<br>
-              {{AddressInfo.Town}}, {{AddressInfo.StateOrProvince}}
-            </div>
-            <div class="charger-details">
-              Distance: {{AddressInfo.Distance}}<br>
-              Quantity: {{Connections.0.Quantity}}<br>
-              {{Connections.0.Level.Title}}
-            </div>
-          </div>
+    <div class="flex-page">
+      <div class="container">
+        <div class="jumbotron" id="welcome">
+            <h1>eFill</h1>
+            <p>Wondering where charging stations are located to charge your electric car when you are out and about? Enter eFill, your one stop shop for your charging needs. <br> <span class="text-muted">Click below to plug-in.</span></p>
+            <p><a class="btn btn-primary btn-lg" id="get-started">Get Plugged!</a></p>
         </div>
-      </script>
 
+        <div class="well search-form">
+          <form class="form-horizontal">
+            <fieldset>
+              <legend>Let's find some chargers!</legend>
+              <div class="form-group row">
+                <input type="text" id="searchAddress" class="col-lg-12 form-control floating-label" data-hint="This can be in almost any format" placeholder="Address">
+              <div class="options">
+                <label id="distance-label" for="distance" class="col-lg-4 control-label">Search Radius <span class="text-muted">(in miles)</span></label>
+                <select class="form-control" id="distance">
+                  <option>1</option>
+                  <option>5</option>
+                  <option selected="selected">10</option>
+                  <option>25</option>
+                  <option>50</option>
+                  <option>75</option>
+                  <option>100</option>
+                </select>
+              <br>
+                <label for="charger-level" class="col-lg-4 control-label">Charging Level</label>
+                <select multiple="" class="form-control" id="charger-level">
+                  <option value="1,2,3" selected="selected">(All)</option>
+                  <option value="1">Level 1</option>
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                </select>
+              </div>
+              <button id="findChargers" class="btn btn-primary btn-sm" type="button" href="javascript:void(0)">Find Chargers</button>
+              <div class="checkbox pull-right settings">
+                <label>
+                  <input type="checkbox"> Settings
+                </label>
+              </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <section class="locations"></section>
+        <script id="charger-location" type="text/x-handlebars-template">
+          <div class="panel panel-primary">
+            <div class="panel-heading charger-heading">
+                <h3 class="panel-title">{{AddressInfo.Title}}</h3>
+                <a href="javascript:void(0)" class="btn btn-info btn-fab btn-raised mdi-action-grade"></a>
+            </div>
+            <div class="panel-body charger-info">
+              <div class="address">
+                {{AddressInfo.AddressLine1}}<br>
+                {{AddressInfo.Town}}, {{AddressInfo.StateOrProvince}}
+              </div>
+              <div class="charger-details">
+                Distance: {{AddressInfo.Distance}}<br>
+                Quantity: {{Connections.0.Quantity}}<br>
+                {{Connections.0.Level.Title}}
+              </div>
+            </div>
+          </div>
+        </script>
+
+      </div>
+
+      <div id="map"></div>
     </div>
-
-    <div id="map"></div>
-
   </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -163,7 +163,7 @@
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.js"></script> -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script> -->
