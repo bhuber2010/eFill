@@ -19,7 +19,7 @@ $(function() {
     })
   })
 
-// Hides search options/filters, moves it to the top left
+// Hides search options/filters, moves it to the top left, and renders gMap
 
   $("#findChargers").one("click",function(){
     $(".options, legend").hide("normal",function(){
@@ -38,11 +38,16 @@ $(function() {
       });
     });
     $("#map")
-      .delay(4000)
+      .delay(1000)
       .css({
         display: "inherit",
-      })
+      });
+    setTimeout(function(){
+      initMap();
+    },2000)
+
   })
+
 
 // Toggles search settings displaying or not
 
