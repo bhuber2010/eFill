@@ -150,6 +150,12 @@ body {
   }
 }
 
+@media screen and (max-width: 1060px) {
+  #map {
+    width: 35vw;
+  }
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -178,5 +184,11 @@ body {
 @media (max-width: 960px) {
   .welcome-img {
     background-image: url("https://source.unsplash.com/category/nature/960x600");
+  }
+  #map {
+    order: -1;
+    margin: 15px;
+    width: 400px;
+    height: 400px;
   }
 }

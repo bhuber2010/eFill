@@ -73,9 +73,9 @@ $(function() {
     var $chargerCall =
       $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput +
           "&key=" + googleKey, function(geoLocation) {
-        var location = geoLocation.results[0].geometry.location;
+        var searchLocation = geoLocation.results[0].geometry.location;
         console.log(location);
-        // return location;
+        // return searchLocation;
       });
 
       //Take Geocoded address and send to Openchargemap.org api
@@ -104,6 +104,12 @@ $(function() {
               .css({
                 height: "76vh",
               });
+            setTimeout(function(){
+              adjustMapCenter(map, latLng);
+            },1800);
+
+            // loop through charger location results
+
             $(chargersResult).map(function(){
 
               // populate results in handlebars template
@@ -125,16 +131,12 @@ $(function() {
                   title: "Charger"
                 });
               },1800)
-
             })
-
           })
-
           .fail(function(){
             console.log("error");
           })
       });
-
   })
 
 // center map on search location
