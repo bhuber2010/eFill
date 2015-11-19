@@ -27,10 +27,7 @@ $(function() {
         marginTop:  0,
         marginLeft: 0,
         maxWidth: "500px",
-      },800)
-      // .css({
-      //   display:  "inline-block",
-      // });
+      },800);
       $(".form-group").css({
         marginBottom: 0,
       });
@@ -139,34 +136,23 @@ $(function() {
       localStorage.setItem("favs",jsonFavs);
       var currentFavs = localStorage.getItem("favs");
       var returnedFavs = JSON.parse(currentFavs);
-      // console.log(returnedFavs);
-      // $(".favs-dropdown").empty;
-      // $(returnedFavs).map(function(){
-      //   var source   = $("#favs-list").html();
-      //   var template = Handlebars.compile(source);
-      //   var html = template(this);
-      //   return $(".favs-dropdown").append(html);
-      // })
-      // localStorage.removeItem("favs");
-      // localStorage.setItem("favs",jsonFavs);
-
   })
 
 // View list of Favs in dropdown
 
-$("#favs-link").on("click",function(){
-  $(".favs-dropdown").empty();
-  var currentFavs = localStorage.getItem("favs");
-  var returnedFavs = JSON.parse(currentFavs);
-  $(".favs-dropdown").append(returnedFavs);
-})
+  $("#favs-link").on("click",function(){
+    $(".favs-dropdown").empty();
+    var currentFavs = localStorage.getItem("favs");
+    var returnedFavs = JSON.parse(currentFavs);
+    $(".favs-dropdown").append(returnedFavs);
+  })
 
 // Clear out favorites
 
-$("#clear-favs").on("click",function(){
-  localStorage.clear("favs");
-  Favs.splice(0,Favs.length);
-})
+  $("#clear-favs").on("click",function(){
+    localStorage.clear("favs");
+    Favs.splice(0,Favs.length);
+  })
 
 
 })
