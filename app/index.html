@@ -110,11 +110,13 @@
             </div>
             <div class="panel-body charger-info">
               <div class="address">
+                <a href="http://maps.google.com/maps?&daddr=”{{AddressInfo.AddressLine1}},+{{AddressInfo.Town}},+{{AddressInfo.StateOrProvince}}”" target="_blank">
                 {{AddressInfo.AddressLine1}}<br>
                 {{AddressInfo.Town}}, {{AddressInfo.StateOrProvince}}
+                </a>
               </div>
               <div class="charger-details">
-                Distance: {{AddressInfo.Distance}}<br>
+                Distance: {{AddressInfo.Distance}} miles<br>
                 Quantity: {{Connections.0.Quantity}}<br>
                 {{Connections.0.Level.Title}}
               </div>
@@ -173,7 +175,7 @@
     <!-- endbuild -->
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"></script>
-    
+
     <!-- build:js scripts/gMaps.js -->
     <script src="scripts/gMaps.js"></script>
     <!-- endbuild -->
