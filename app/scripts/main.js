@@ -108,6 +108,7 @@ $(function() {
               adjustMapCenter(map, latLng);
             },1800);
 
+
             // loop through charger location results
 
             $(chargersResult).map(function(){
@@ -139,7 +140,7 @@ $(function() {
       });
   })
 
-// center map on search location
+// center map
 
   function adjustMapCenter(map, location) {
     mapOptions = {
@@ -149,7 +150,6 @@ $(function() {
     };
     map.setOptions(mapOptions);
   }
-
 
 // On click of star button, add charger location to favorites
 
