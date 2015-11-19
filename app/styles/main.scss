@@ -18,7 +18,10 @@ $icon-font-path: '../fonts/';
   padding: 0.2em 0;
 }
 
-/* Space out content a bit */
+.dropdown-menu {
+    color: black;
+  }
+
 body {
   height: 100%;
   margin: 0;
