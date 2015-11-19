@@ -3,11 +3,13 @@
 // failed.", it means you probably did not give permission for the browser to
 // locate you.
 
+var map;
+
 function initMap() {
   var myLatLng = {lat: 39.7392358, lng: -104.990251};
-  var map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById("map"), {
     center: myLatLng,
-    zoom: 6
+    zoom: 10
   });
   var infoWindow = new google.maps.InfoWindow({map: map});
 
@@ -20,7 +22,7 @@ function initMap() {
       };
 
       infoWindow.setPosition(pos);
-      infoWindow.setContent("Location found.");
+      infoWindow.setContent("You are here!");
       map.setCenter(pos);
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
@@ -30,12 +32,6 @@ function initMap() {
     handleLocationError(false, infoWindow, map.getCenter());
   }
 
-  // // Map Marker
-  // var marker = new google.maps.Marker({
-  //   position: myLatLng,
-  //   map: map,
-  //   title: "eFill Search"
-  // });
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {

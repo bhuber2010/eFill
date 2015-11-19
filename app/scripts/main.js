@@ -11,7 +11,7 @@ $(function() {
   var searchForm = $(".search-form");
   var $searchOptions = $(".options");
 
-// Remove welcome and display everything else(this part needs to be added)
+// Remove welcome and display search
 
   $("#get-started").on("click",function(){
     $("#welcome").fadeOut("slow",function(){
@@ -73,15 +73,10 @@ $(function() {
     var $chargerCall =
       $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput +
           "&key=" + googleKey, function(geoLocation) {
-        console.log(geoLocation);
-      })
-
-        .done(function(){
-        })
-
-        .fail(function(){
-          console.log("error");
-        })
+        var location = geoLocation.results[0].geometry.location;
+        console.log(location);
+        // return location;
+      });
 
       //Take Geocoded address and send to Openchargemap.org api
 
@@ -97,7 +92,8 @@ $(function() {
             "&latitude=" + lat +
             "&longitude=" + lng +
             "&distance=" + searchDistance +
-            "&distanceunit=Miles&levelid=" + searchLevels, function(){
+            "&distanceunit=Miles" +
+            "&levelid=" + searchLevels, function(){
         })
 
           .done(function(chargersResult){
@@ -109,14 +105,29 @@ $(function() {
                 height: "76vh",
               });
             $(chargersResult).map(function(){
+
+              // populate results in handlebars template
               var source   = $("#charger-location").html();
               var template = Handlebars.compile(source);
               var html = template(this);
-              return $locations.append(html).hide().fadeIn(800);
+              $locations.append(html).hide().fadeIn(800);
 
-              console.log("Level " + this.Connections[0].LevelID);
-              console.log("Quantity " + this.Connections[0].Quantity);
+              var resultLatLng = {
+                lat: this.AddressInfo.Latitude,
+                lng: this.AddressInfo.Longitude
+              }
+
+              // Map Marker
+              setTimeout(function(){
+                var marker = new google.maps.Marker({
+                  position: resultLatLng,
+                  map: map,
+                  title: "Charger"
+                });
+              },1800)
+
             })
+
           })
 
           .fail(function(){
@@ -125,6 +136,18 @@ $(function() {
       });
 
   })
+
+// center map on search location
+
+  function adjustMapCenter(map, location) {
+    mapOptions = {
+      center: location,
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map.setOptions(mapOptions);
+  }
+
 
 // On click of star button, add charger location to favorites
 
