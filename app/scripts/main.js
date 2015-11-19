@@ -121,10 +121,6 @@ $(function() {
 
 // On click of star button, add charger location to favorites
 
-  // var returnedFavs = [];
-  // var currentFavs = localStorage.getItem("favs");
-  // returnedFavs = JSON.parse(currentFavs);
-
   var Favs = [];
 
   $(document).on("click",".mdi-action-grade",function(){
@@ -133,12 +129,19 @@ $(function() {
       var selectedFav = this.closest(".panel");
       console.log(selectedFav);
       var updatedFavs = Favs.push(selectedFav.innerHTML);
-      console.log(Favs);
+      // console.log(Favs);
       var jsonFavs = JSON.stringify(Favs);
       localStorage.setItem("favs",jsonFavs);
       var currentFavs = localStorage.getItem("favs");
       var returnedFavs = JSON.parse(currentFavs);
-      console.log(returnedFavs);
+      // console.log(returnedFavs);
+      $(".favs-dropdown").empty;
+      $(returnedFavs).map(function(){
+        var source   = $("#favs-list").html();
+        var template = Handlebars.compile(source);
+        var html = template(this);
+        return $(".favs-dropdown").append(html);
+      })
 
       // localStorage.removeItem("favs");
       // localStorage.setItem("favs",jsonFavs);
@@ -147,22 +150,17 @@ $(function() {
 
 // View list of Favs in dropdown
 
+$("#favs-link").on("click",function(){
+  $(".favs-dropdown").empty();
+  var currentFavs = localStorage.getItem("favs");
+  var returnedFavs = JSON.parse(currentFavs);
+  $(".favs-dropdown").append(returnedFavs);
+})
 
-
-  $("#favs-link").on("click",function(){
-    var currentFavs = localStorage.getItem("favs");
-    var returnedFavs = JSON.parse(currentFavs);
-    console.log(returnedFavs);
-    $(returnedFavs).map(function(){
-      var source   = $("#favs-list").html();
-      var template = Handlebars.compile(source);
-      var html = template(this);
-      return $(".favs-dropdown").append(html);
-    })
-  })
-
-
-
+$("#clear-favs").on("click",function(){
+  localStorage.clear("favs");
+  Favs.splice(0,Favs.length);
+})
 
 
 })

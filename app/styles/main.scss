@@ -20,6 +20,13 @@ $icon-font-path: '../fonts/';
 
 .dropdown-menu {
     color: black;
+    .charger-heading {
+      color: rgba(255, 255, 255, 0.84);
+      background-color: #009688;
+    }
+    .fav {
+      display: none;
+    }
   }
 
 body {
