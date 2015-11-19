@@ -157,6 +157,8 @@ $("#favs-link").on("click",function(){
   $(".favs-dropdown").append(returnedFavs);
 })
 
+// Clear out favorites
+
 $("#clear-favs").on("click",function(){
   localStorage.clear("favs");
   Favs.splice(0,Favs.length);
