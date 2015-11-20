@@ -23,15 +23,15 @@ $(function() {
 
   $("#searchAddress").blur(function(){
     if( $(this).val().length === 0 ) {
-      $("#findChargers").prop("disabled",true);
+      $findChargers.prop("disabled",true);
     } else {
-      $("#findChargers").prop("disabled",false);
+      $findChargers.prop("disabled",false);
     }
   });
 
 // Hides search options/filters, moves it to the top left, and renders gMap
 
-  $("#findChargers").one("click",function(){
+  $findChargers.one("click",function(){
     $(".options, legend").hide("normal",function(){
       $(".container").animate({
         marginTop:  0,
@@ -76,13 +76,13 @@ $(function() {
    $("#searchAddress").keypress(function (e) {
     if (e.which == 13) {
       e.preventDefault();
-      $("#findChargers").trigger("click");
+      $findChargers.trigger("click");
     }
    });
 
 // Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
 
-  $("#findChargers").on("click", function(){
+  $findChargers.on("click", function(){
 
     var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
     // 5600 Greenwood Plaza Blvd, 80111
