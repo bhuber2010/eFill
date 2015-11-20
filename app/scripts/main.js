@@ -1,5 +1,4 @@
 
-
 $(function() {
 
 // initilize Material Bootstrap
@@ -35,6 +34,7 @@ $(function() {
         display:        "flex",
         flexWrap:       "wrap",
         justifyContent: "space-between",
+        height:         "88vh",
       });
     });
     $("#map")
@@ -49,13 +49,22 @@ $(function() {
   })
 
 
-// Toggles search settings displaying or not
+// Shows search options
 
   $(".settings").on("click",function(){
     // console.log($(this).prop("checked"));
     // $(this).prop("checked", !$(this).prop("checked"));
     $searchOptions.slideDown();
   })
+
+// enter on address field also tiggers search
+
+   $("#searchAddress").keypress(function (e) {
+    if (e.which == 13) {
+      e.preventDefault();
+      $("#findChargers").trigger("click");
+    }
+   });
 
 // Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
 
@@ -74,7 +83,7 @@ $(function() {
       $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput +
           "&key=" + googleKey, function(geoLocation) {
         var searchLocation = geoLocation.results[0].geometry.location;
-        console.log(location);
+        console.log(searchLocation);
         // return searchLocation;
       });
 
@@ -124,7 +133,7 @@ $(function() {
                 lng: this.AddressInfo.Longitude
               }
 
-              // Map Marker
+              // Map Marker (need to redo this with array)
               setTimeout(function(){
                 var marker = new google.maps.Marker({
                   position: resultLatLng,
@@ -145,7 +154,7 @@ $(function() {
   function adjustMapCenter(map, location) {
     mapOptions = {
       center: location,
-      zoom: 10,
+      zoom: 11,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map.setOptions(mapOptions);
