@@ -30,6 +30,9 @@ $(function() {
       $(".form-group").css({
         marginBottom: 0,
       });
+      $(".settings").css({
+        display:  "block",
+      });
       $(".flex-page").css({
         display:        "flex",
         flexWrap:       "wrap",
