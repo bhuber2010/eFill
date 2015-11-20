@@ -9,6 +9,7 @@ $(function() {
   var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw";
   var searchForm = $(".search-form");
   var $searchOptions = $(".options");
+  var $findChargers = $("#findChargers")
 
 // Remove welcome and display search
 
@@ -17,6 +18,16 @@ $(function() {
       searchForm.fadeIn(800);
     })
   })
+
+// Disable Find Chargers button if no address
+
+  $("#searchAddress").blur(function(){
+    if( $(this).val().length === 0 ) {
+      $("#findChargers").prop("disabled",true);
+    } else {
+      $("#findChargers").prop("disabled",false);
+    }
+  });
 
 // Hides search options/filters, moves it to the top left, and renders gMap
 
