@@ -104,7 +104,7 @@
         <section class="locations"></section>
         <script id="charger-location" type="text/x-handlebars-template">
           <div class="panel panel-primary">
-            <div class="panel-heading charger-heading">
+            <div class="panel-heading charger-heading" data-marker-index="{{@index}}">
                 <h3 class="panel-title">{{AddressInfo.Title}}</h3>
                 <a href="javascript:void(0)" class="btn btn-info btn-fab btn-raised mdi-action-grade"></a>
             </div>
@@ -180,10 +180,12 @@
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw"></script> -->
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="scripts/gmaps.js"></script>
 
     <!-- build:js scripts/gMaps.js -->
-    <script src="scripts/gMaps.js"></script>
+    <script src="scripts/mapData.js"></script>
     <!-- endbuild -->
   </body>
 </html>

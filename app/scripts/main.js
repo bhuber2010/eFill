@@ -93,43 +93,49 @@ $(function() {
 
     $searchOptions.fadeOut("slow");
 
-    var $chargerCall =
-      $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput +
-          "&key=" + googleKey, function(geoLocation) {
-        var searchLocation = geoLocation.results[0].geometry.location;
-        console.log(searchLocation);
-        // return searchLocation;
-      });
+    // Insert results of broken down functions below, here
+
+  })
+
+  var addressGeocode =
+    $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?" +
+    "address=" + searchInput +
+    "&key=" + googleKey);
 
       //Take Geocoded address and send to Openchargemap.org api
 
-      $chargerCall.always(function() {
-        var latLng = $chargerCall.responseJSON.results[0].geometry.location,
-            lat = latLng.lat,
-            lng = latLng.lng;
-            console.log(lat, lng);
+  addressGeocode.done(geocodeResult);
 
-        $.get("http://api.openchargemap.io/v2/poi/?output=json" +
-            "&countrycode=US" +
-            "&maxresults=" + 100 +
-            "&latitude=" + lat +
-            "&longitude=" + lng +
-            "&distance=" + searchDistance +
-            "&distanceunit=Miles" +
-            "&levelid=" + searchLevels, function(){
-        })
 
-          .done(function(chargersResult){
-            console.log(chargersResult);
-            var $locations = $(".locations");
-            $locations
-              .empty()
-              .css({
-                height: "76vh",
-              });
-            setTimeout(function(){
-              adjustMapCenter(map, latLng);
-            },1800);
+  function(geocodeResult) {
+    var latLng = geocodeResult[0].geometry.location,
+      lat = latLng.lat,
+      lng = latLng.lng;
+      console.log(lat, lng);
+      return latLng;
+  });
+
+  var chargerSearch =
+    $.getJSON("http://api.openchargemap.io/v2/poi/?output=json" +
+    "&countrycode=US" +
+    "&maxresults=" + 100 +
+    "&latitude=" + lat +
+    "&longitude=" + lng +
+    "&distance=" + searchDistance +
+    "&distanceunit=Miles" +
+    "&levelid=" + searchLevels);
+
+  chargerSearch.done(function(chargersResult){
+  console.log(chargersResult);
+  var $locations = $(".locations");
+  $locations
+    .empty()
+    .css({
+      height: "76vh",
+    });
+  setTimeout(function(){
+    adjustMapCenter(map, latLng);
+  },1800);
 
 
             // loop through charger location results
@@ -160,8 +166,8 @@ $(function() {
           .fail(function(){
             console.log("error");
           })
-      });
-  })
+
+
 
 // center map
 
