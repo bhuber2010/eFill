@@ -94,8 +94,17 @@ $(function() {
      return $("#charger-level").val().toString();
    };
 
+  // function geoCall() {
+  //   var addressGeocode =
+  //     $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?" +
+  //     "address=" + addressSearch +
+  //     "&key=" + googleKey);
+  //     return addressGeocode
+  // }
+  //
+  // geoCall()
 
-var geoAddress;
+  var gAddrees;
 
   $findChargers.on("click", function(){
     var addressSearch = searchInput();
@@ -103,11 +112,13 @@ var geoAddress;
       $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?" +
       "address=" + addressSearch +
       "&key=" + googleKey);
+    var geoAddress;
 
     addressGeocode.done(function(data) {
       geoAddress = data.results[0].geometry.location;
-      console.log(geoAddress);
     });
+
+    gAddrees = geoAddress;
 
     searchDistance();
     searchLevels();
@@ -116,49 +127,44 @@ var geoAddress;
     console.log("Charger Level: " + searchLevels())
 
     $searchOptions.fadeOut("slow");
+    console.log(gAddress);
+    chargerSearch();
 
   })
+
 
 
   //Take Geocoded address and send to Openchargemap.org api
-  function geocodeResult(geoData){
-    var latLng = geoData[0].geometry.location,
-      lat = latLng.lat,
-      lng = latLng.lng;
-      console.log(lat, lng);
-      return latLng;
-  };
-
 
   var chargerSearch = function(){
+    var lat = geoAddress;
+    var lng = geoAddress.lng
     $.getJSON("http://api.openchargemap.io/v2/poi/?output=json" +
     "&countrycode=US" +
     "&maxresults=" + 100 +
-    "&latitude=" + latLng.lat +
-    "&longitude=" + latLng.lng +
+    "&latitude=" + lat +
+    "&longitude=" + lng +
     "&distance=" + searchDistance +
     "&distanceunit=Miles" +
-    "&levelid=" + searchLevels);
-
+    "&levelid=" + searchLevels)
+    .done(function(cData){
+      console.log(cData);
+    })
   };
 
-  chargerSearch.done(function(chargersResult){
-    console.log(chargersResult);
-    var $locations = $(".locations");
-    $locations
-      .empty()
-      .css({
-        height: "76vh",
-      });
-    setTimeout(function(){
-      adjustMapCenter(map, latLng);
-    },1800);
-  })
+  // chargerSearch.done(function(){
+  //   var $locations = $(".locations");
+  //   $locations
+  //     .empty()
+  //     .css({
+  //       height: "76vh",
+  //     });
+  //   setTimeout(function(){
+  //     adjustMapCenter(map, latLng);
+  //   },1800);
+  // })
 
 
-
-
-debugger;
             // loop through charger location results
 
             $(chargersResult).map(function(){
