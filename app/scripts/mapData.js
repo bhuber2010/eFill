@@ -44,7 +44,6 @@ $(document).on('click', '.charger-heading', function(e) {
 });
 
 $(document).ready(function(){
-  prettyPrint();
   map = new GMaps({
     div: '#map',
     lat: -12.043333,

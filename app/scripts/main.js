@@ -31,36 +31,36 @@ $(function() {
 
 // Hides search options/filters, moves it to the top left, and renders gMap
 
-  $findChargers.one("click",function(){
-    $(".options, legend").hide("normal",function(){
-      $(".container").animate({
-        marginTop:  0,
-        marginLeft: 0,
-        maxWidth: "500px",
-      },800);
-      $(".form-group").css({
-        marginBottom: 0,
-      });
-      $(".settings").css({
-        display:  "block",
-      });
-      $(".flex-page").css({
-        display:        "flex",
-        flexWrap:       "wrap",
-        justifyContent: "space-between",
-        height:         "88vh",
-      });
-    });
-    $("#map")
-      .delay(1000)
-      .css({
-        display: "inherit",
-      });
-    setTimeout(function(){
-      initMap();
-    },2000)
-
-  })
+  // $findChargers.one("click",function(){
+  //   $(".options, legend").hide("normal",function(){
+  //     $(".container").animate({
+  //       marginTop:  0,
+  //       marginLeft: 0,
+  //       maxWidth: "500px",
+  //     },800);
+  //     $(".form-group").css({
+  //       marginBottom: 0,
+  //     });
+  //     $(".settings").css({
+  //       display:  "block",
+  //     });
+  //     $(".flex-page").css({
+  //       display:        "flex",
+  //       flexWrap:       "wrap",
+  //       justifyContent: "space-between",
+  //       height:         "88vh",
+  //     });
+  //   });
+  //   $("#map")
+  //     .delay(1000)
+  //     .css({
+  //       display: "inherit",
+  //     });
+  //   setTimeout(function(){
+  //     initMap();
+  //   },2000)
+  //
+  // })
 
 
 // Shows search options
@@ -71,7 +71,7 @@ $(function() {
     $searchOptions.slideDown();
   })
 
-// enter on address field also tiggers search
+// enter on address field also triggers search
 
    $("#searchAddress").keypress(function (e) {
     if (e.which == 13) {
@@ -80,64 +80,84 @@ $(function() {
     }
    });
 
-// Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
+   // Chargers search calls (first to Geocode address and then query OpenChargeMap for results based on inputs)
+
+   function searchInput() {
+     return $("#searchAddress").val().replace(/\s+/g, "+");
+   }
+
+   function searchDistance() {
+     return $("#distance").find(":selected").text();
+   };
+
+   function searchLevels() {
+     return $("#charger-level").val().toString();
+   };
+
+
+
 
   $findChargers.on("click", function(){
+    var addressSearch = searchInput();
+    var addressGeocode =
+      $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?" +
+      "address=" + addressSearch +
+      "&key=" + googleKey);
 
-    var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
-    // 5600 Greenwood Plaza Blvd, 80111
-    var searchDistance = $("#distance").find(":selected").text();
-    console.log("Distance: " + searchDistance);
-    var searchLevels = $("#charger-level").val().toString();
-    console.log("Charger Level: " + searchLevels);
+    addressGeocode.done(function(data) {
+      console.log(data.results[0].geometry.location);
+    });
+
+    searchDistance();
+    searchLevels();
+
+    console.log("Distance: " + searchDistance())
+    console.log("Charger Level: " + searchLevels())
 
     $searchOptions.fadeOut("slow");
 
-    // Insert results of broken down functions below, here
-
   })
 
-  var addressGeocode =
-    $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?" +
-    "address=" + searchInput +
-    "&key=" + googleKey);
 
-      //Take Geocoded address and send to Openchargemap.org api
-
-  addressGeocode.done(geocodeResult);
-
-
-  function(geocodeResult) {
-    var latLng = geocodeResult[0].geometry.location,
+  //Take Geocoded address and send to Openchargemap.org api
+  function geocodeResult(geoData){
+    var latLng = geoData[0].geometry.location,
       lat = latLng.lat,
       lng = latLng.lng;
       console.log(lat, lng);
       return latLng;
-  });
+  };
 
-  var chargerSearch =
+
+  var chargerSearch = function(){
     $.getJSON("http://api.openchargemap.io/v2/poi/?output=json" +
     "&countrycode=US" +
     "&maxresults=" + 100 +
-    "&latitude=" + lat +
-    "&longitude=" + lng +
+    "&latitude=" + latLng.lat +
+    "&longitude=" + latLng.lng +
     "&distance=" + searchDistance +
     "&distanceunit=Miles" +
     "&levelid=" + searchLevels);
 
+  };
+
   chargerSearch.done(function(chargersResult){
-  console.log(chargersResult);
-  var $locations = $(".locations");
-  $locations
-    .empty()
-    .css({
-      height: "76vh",
-    });
-  setTimeout(function(){
-    adjustMapCenter(map, latLng);
-  },1800);
+    console.log(chargersResult);
+    var $locations = $(".locations");
+    $locations
+      .empty()
+      .css({
+        height: "76vh",
+      });
+    setTimeout(function(){
+      adjustMapCenter(map, latLng);
+    },1800);
+  })
 
 
+
+
+debugger;
             // loop through charger location results
 
             $(chargersResult).map(function(){
@@ -162,7 +182,7 @@ $(function() {
                 });
               },1800)
             })
-          })
+
           .fail(function(){
             console.log("error");
           })
