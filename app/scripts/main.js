@@ -95,7 +95,7 @@ $(function() {
    };
 
 
-
+var geoAddress;
 
   $findChargers.on("click", function(){
     var addressSearch = searchInput();
@@ -105,7 +105,8 @@ $(function() {
       "&key=" + googleKey);
 
     addressGeocode.done(function(data) {
-      console.log(data.results[0].geometry.location);
+      geoAddress = data.results[0].geometry.location;
+      console.log(geoAddress);
     });
 
     searchDistance();
