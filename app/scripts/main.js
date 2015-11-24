@@ -136,10 +136,14 @@ $(function() {
 
             $(chargersResult).map(function(){
 
+              // manipulated OpenCharger API variables
+              var chargerDist = Math.round( this.AddressInfo.Distance * 10 ) / 10;
+
               // populate results in handlebars template
               var source   = $("#charger-location").html();
               var template = Handlebars.compile(source);
-              var html = template(this);
+              var context = {api: this, Distance: chargerDist};
+              var html = template(context);
               $locations.append(html).hide().fadeIn(800);
 
               var resultLatLng = {

@@ -105,25 +105,25 @@
         <script id="charger-location" type="text/x-handlebars-template">
           <div class="panel panel-primary">
             <div class="panel-heading charger-heading">
-                <h3 class="panel-title">{{AddressInfo.Title}}</h3>
+                <h3 class="panel-title">{{api.AddressInfo.Title}}</h3>
                 <a href="javascript:void(0)" class="btn btn-info btn-fab btn-raised mdi-action-grade"></a>
             </div>
             <div class="panel-body charger-info">
               <div class="address">
-                <a href="http://maps.google.com/maps?&daddr=”{{AddressInfo.AddressLine1}},+{{AddressInfo.Town}},+{{AddressInfo.StateOrProvince}}”" target="_blank">
-                {{AddressInfo.AddressLine1}}<br>
-                {{AddressInfo.Town}}, {{AddressInfo.StateOrProvince}}
+                <a href="http://maps.google.com/maps?&daddr=”{{api.AddressInfo.AddressLine1}},+{{api.AddressInfo.Town}},+{{api.AddressInfo.StateOrProvince}}”" target="_blank">
+                {{api.AddressInfo.AddressLine1}}<br>
+                {{api.AddressInfo.Town}}, {{api.AddressInfo.StateOrProvince}}
                 </a>
               </div>
               <div class="charger-details">
-                Distance: {{AddressInfo.Distance}} miles<br>
-                Quantity: {{Connections.0.Quantity}}<br>
-                {{Connections.0.Level.Title}}
+                Distance: {{Distance}} miles<br>
+                Quantity: {{api.Connections.0.Quantity}}<br>
+                {{api.Connections.0.Level.Title}}
               </div>
               <div class="hidden charger-latlng">
                 {
-                  lat:{{AddressInfo.Latitude}},
-                  lng:{{AddressInfo.Longitude}}
+                  lat:{{api.AddressInfo.Latitude}},
+                  lng:{{api.AddressInfo.Longitude}}
                 }
               </div>
             </div>
