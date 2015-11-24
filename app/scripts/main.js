@@ -11,6 +11,7 @@ $(function() {
   var $searchOptions = $(".options");
   var $findChargers = $("#findChargers");
   var $locations = $(".locations");
+  var markers_data = [];
 
 // Remove welcome and display search
 
@@ -149,7 +150,6 @@ $(function() {
               var html = template(context);
               $locations.append(html).hide().fadeIn(800);
 
-              var markers_data = [];
               var resultLatLng = {
                 lat: this.AddressInfo.Latitude,
                 lng: this.AddressInfo.Longitude
@@ -166,7 +166,6 @@ $(function() {
 
               if (lat != undefined && lng != undefined) {
                 var icon = 'https://maps.google.com/mapfiles/kml/paddle/grn-circle.png';
-
                 markers_data.push({
                   lat : lat,
                   lng : lng,
