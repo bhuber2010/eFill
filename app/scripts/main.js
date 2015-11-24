@@ -57,10 +57,13 @@ $(function() {
       .delay(800)
       .css({
         display: "inherit",
+        //these need math done on them
+        height: "500px",
+        width: "500px",
       });
-    setTimeout(function(){
-      initMap();
-    },2000)
+    // setTimeout(function(){
+    //   initMap();
+    // },1000)
 
   })
 
@@ -173,7 +176,7 @@ $(function() {
                   lng : lng,
                   title : this.AddressInfo.Title,
                   icon : {
-                    size : new google.maps.Size(32, 32),
+                    size : new google.maps.Size(16, 16),
                     url : icon
                   }
                 });
