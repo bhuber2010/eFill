@@ -93,12 +93,14 @@ $(function() {
     var searchLevels = $("#charger-level").val().toString();
     console.log("Charger Level: " + searchLevels);
 
-    // remove previous search results from list
+    // remove previous search results from list & markers from map
     $locations
       .empty()
       .css({
         height: "76vh",
       });
+
+    markers_data.splice(0,markers_data.length);
 
     // hide search options (if they are shown)
     $searchOptions.fadeOut("slow");
@@ -177,8 +179,7 @@ $(function() {
                 });
               }
 
-
-
+              map.addMarkers(markers_data);
 
             })
           })
