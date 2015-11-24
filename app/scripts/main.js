@@ -135,7 +135,6 @@ $(function() {
               adjustMapCenter(map, latLng);
             },1800);
 
-
             // loop through charger location results
 
             $(chargersResult).map(function(){
