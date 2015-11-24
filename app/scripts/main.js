@@ -9,7 +9,8 @@ $(function() {
   var googleKey = "AIzaSyCLXvOIsoBU0qY0PaF6bzbL0VkaG9u5aHw";
   var searchForm = $(".search-form");
   var $searchOptions = $(".options");
-  var $findChargers = $("#findChargers")
+  var $findChargers = $("#findChargers");
+  var $locations = $(".locations");
 
 // Remove welcome and display search
 
@@ -52,7 +53,7 @@ $(function() {
       });
     });
     $("#map")
-      .delay(1000)
+      .delay(800)
       .css({
         display: "inherit",
       });
@@ -91,8 +92,17 @@ $(function() {
     var searchLevels = $("#charger-level").val().toString();
     console.log("Charger Level: " + searchLevels);
 
+    // remove previous search results from list
+    $locations
+      .empty()
+      .css({
+        height: "76vh",
+      });
+
+    // hide search options (if they are shown)
     $searchOptions.fadeOut("slow");
 
+    // geocode address
     var $chargerCall =
       $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput +
           "&key=" + googleKey, function(geoLocation) {
@@ -121,12 +131,6 @@ $(function() {
 
           .done(function(chargersResult){
             console.log(chargersResult);
-            var $locations = $(".locations");
-            $locations
-              .empty()
-              .css({
-                height: "76vh",
-              });
             setTimeout(function(){
               adjustMapCenter(map, latLng);
             },1800);
