@@ -149,19 +149,38 @@ $(function() {
               var html = template(context);
               $locations.append(html).hide().fadeIn(800);
 
+              var markers_data = [];
               var resultLatLng = {
                 lat: this.AddressInfo.Latitude,
                 lng: this.AddressInfo.Longitude
               }
 
               // Map Marker (need to redo this with array)
-              setTimeout(function(){
-                var marker = new google.maps.Marker({
-                  position: resultLatLng,
-                  map: map,
-                  title: "Charger"
+              // setTimeout(function(){
+              //   var marker = new google.maps.Marker({
+              //     position: resultLatLng,
+              //     map: map,
+              //     title: "Charger"
+              //   });
+              // },1800)
+
+              if (lat != undefined && lng != undefined) {
+                var icon = 'https://maps.google.com/mapfiles/kml/paddle/grn-circle.png';
+
+                markers_data.push({
+                  lat : lat,
+                  lng : lng,
+                  title : this.AddressInfo.Title,
+                  icon : {
+                    size : new google.maps.Size(32, 32),
+                    url : icon
+                  }
                 });
-              },1800)
+              }
+
+
+
+
             })
           })
           .fail(function(){
