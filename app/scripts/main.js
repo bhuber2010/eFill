@@ -86,10 +86,9 @@ $(function() {
   $findChargers.on("click", function(){
 
     var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
-    // 5600 Greenwood Plaza Blvd, 80111
     var searchDistance = $("#distance").find(":selected").text();
-    console.log("Distance: " + searchDistance);
     var searchLevels = $("#charger-level").val().toString();
+    console.log("Distance: " + searchDistance);
     console.log("Charger Level: " + searchLevels);
 
     // remove previous search results from list
@@ -103,71 +102,68 @@ $(function() {
     $searchOptions.fadeOut("slow");
 
     // geocode address
-    var $chargerCall =
-      $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput +
-          "&key=" + googleKey, function(geoLocation) {
-        var searchLocation = geoLocation.results[0].geometry.location;
-        console.log(searchLocation);
-        // return searchLocation;
-      });
+      $.get("https://maps.googleapis.com/maps/api/geocode/json?" +
+      "address=" + searchInput +
+      "&key=" + googleKey)
+        .then(function(geoLocation) {
+          var searchLocation = geoLocation.results[0].geometry.location;
+          return searchLocation;
+        })
 
       //Take Geocoded address and send to Openchargemap.org api
 
-      $chargerCall.always(function() {
-        var latLng = $chargerCall.responseJSON.results[0].geometry.location,
-            lat = latLng.lat,
-            lng = latLng.lng;
-            console.log(lat, lng);
+        .then(function(searchLocation) {
+          lat = searchLocation.lat,
+          lng = searchLocation.lng;
 
-        $.get("http://api.openchargemap.io/v2/poi/?output=json" +
-            "&countrycode=US" +
+          $.get("http://api.openchargemap.io/v2/poi/?output=json" +
+            "&countrycode=" + "US" +
             "&maxresults=" + 100 +
             "&latitude=" + lat +
             "&longitude=" + lng +
             "&distance=" + searchDistance +
             "&distanceunit=Miles" +
-            "&levelid=" + searchLevels, function(){
+            "&levelid=" + searchLevels, chargersResult)
+          })
+
+        .then(function(chargersResult){
+          console.log(chargersResult);
+          adjustMapCenter(map, searchLocation);
+          var markers = [];
+
+          // loop through charger location results
+          $(chargersResult).map(function(){
+
+            // manipulated OpenCharger API variables
+            var chargerDist = Math.round( this.AddressInfo.Distance * 10 ) / 10;
+
+            // populate results in handlebars template
+            var source   = $("#charger-location").html();
+            var template = Handlebars.compile(source);
+            var context = {api: this, Distance: chargerDist};
+            var html = template(context);
+            $locations.append(html).hide().fadeIn(800);
+
+            markers.push({
+              id:     this.AddressInfo. , // find out what the name of the ID is
+              LatLng: {
+                lat:    this.AddressInfo.Latitude,
+                lng:    this.AddressInfo.Longitude
+              }
+            });
+          ,return markers});
         })
 
-          .done(function(chargersResult){
-            console.log(chargersResult);
-            setTimeout(function(){
-              adjustMapCenter(map, latLng);
-            },1800);
-
-            // loop through charger location results
-
-            $(chargersResult).map(function(){
-
-              // manipulated OpenCharger API variables
-              var chargerDist = Math.round( this.AddressInfo.Distance * 10 ) / 10;
-
-              // populate results in handlebars template
-              var source   = $("#charger-location").html();
-              var template = Handlebars.compile(source);
-              var context = {api: this, Distance: chargerDist};
-              var html = template(context);
-              $locations.append(html).hide().fadeIn(800);
-
-              var resultLatLng = {
-                lat: this.AddressInfo.Latitude,
-                lng: this.AddressInfo.Longitude
-              }
-
-              // Map Marker (need to redo this with array)
-              setTimeout(function(){
-                var marker = new google.maps.Marker({
-                  position: resultLatLng,
-                  map: map,
-                  title: "Charger"
-                });
-              },1800)
-            })
-          })
-          .fail(function(){
-            console.log("error");
-          })
-      });
+      // Map Marker (need to redo this with array)
+        .then(function(markers){
+          for (var i = 0; i < markers.length; i++) {
+            markers[i] = new google.maps.Marker({
+              position: markers[i].LatLng,
+              map: map,
+              title: markers[i].id
+            });
+          }
+        })
   })
 
 // center map
