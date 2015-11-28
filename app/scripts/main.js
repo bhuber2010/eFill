@@ -106,6 +106,7 @@ $(function() {
       "address=" + searchInput +
       "&key=" + googleKey)
         .then(function(geoLocation) {
+          console.log(geoLocation);
           var searchLocation = geoLocation.results[0].geometry.location;
           return searchLocation;
         })
@@ -113,22 +114,24 @@ $(function() {
       //Take Geocoded address and send to Openchargemap.org api
 
         .then(function(searchLocation) {
+          adjustMapCenter(map, searchLocation);
+          console.log(searchLocation);
           lat = searchLocation.lat,
           lng = searchLocation.lng;
 
-          $.get("http://api.openchargemap.io/v2/poi/?output=json" +
+          return $.get("http://api.openchargemap.io/v2/poi/?output=json" +
             "&countrycode=" + "US" +
             "&maxresults=" + 100 +
             "&latitude=" + lat +
             "&longitude=" + lng +
             "&distance=" + searchDistance +
             "&distanceunit=Miles" +
-            "&levelid=" + searchLevels, chargersResult)
+            "&levelid=" + searchLevels);
           })
 
         .then(function(chargersResult){
           console.log(chargersResult);
-          adjustMapCenter(map, searchLocation);
+
           var markers = [];
 
           // loop through charger location results
@@ -145,13 +148,13 @@ $(function() {
             $locations.append(html).hide().fadeIn(800);
 
             markers.push({
-              id:     this.AddressInfo. , // find out what the name of the ID is
+              id:     this.AddressInfo.ID,
               LatLng: {
                 lat:    this.AddressInfo.Latitude,
                 lng:    this.AddressInfo.Longitude
               }
             });
-          ,return markers});
+          return markers});
         })
 
       // Map Marker (need to redo this with array)
