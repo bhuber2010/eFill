@@ -32,35 +32,45 @@ $(function() {
 
 // Hides search options/filters, moves it to the top left, and renders gMap
 
-  $findChargers.one("click",function(){
-    $(".options, legend").hide("normal",function(){
-      $(".container").animate({
-        marginTop:  0,
-        marginLeft: 0,
-        maxWidth: "500px",
-      },800);
-      $(".form-group").css({
-        marginBottom: 0,
+  var firstSearch = function() {
+    return new Promise(function(resolve, reject) {
+      $(".options, legend").hide("normal",function(){
+        $(".container").animate({
+          marginTop:  0,
+          marginLeft: 0,
+          maxWidth: "500px",
+        },800);
+        $(".form-group").css({
+          marginBottom: 0,
+        });
+        $(".settings").css({
+          display:  "block",
+        });
+        $(".flex-page").css({
+          display:        "flex",
+          flexWrap:       "wrap",
+          justifyContent: "space-between",
+          height:         "88vh",
+        });
       });
-      $(".settings").css({
-        display:  "block",
-      });
-      $(".flex-page").css({
-        display:        "flex",
-        flexWrap:       "wrap",
-        justifyContent: "space-between",
-        height:         "88vh",
-      });
-    });
-    $("#map")
-      .delay(800)
-      .css({
-        display: "inherit",
-      });
-    setTimeout(function(){
-      initMap();
-    },2000)
+      $("#map")
+        // .delay(800)
+        .css({
+          display: "inherit",
+        })
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
+  }
 
+  var firstSearchRan;
+
+  $findChargers.one("click",function(){
+    firstSearchRan = firstSearch()
+      .then(function() {
+        return initMap();
+      })
   })
 
 
@@ -85,89 +95,92 @@ $(function() {
 
   $findChargers.on("click", function(){
 
-    var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
-    var searchDistance = $("#distance").find(":selected").text();
-    var searchLevels = $("#charger-level").val().toString();
-    console.log("Distance: " + searchDistance);
-    console.log("Charger Level: " + searchLevels);
+    firstSearchRan.then(function() {
+      var searchInput = $("#searchAddress").val().replace(/\s+/g, "+")
+      var searchDistance = $("#distance").find(":selected").text();
+      var searchLevels = $("#charger-level").val().toString();
+      console.log("Distance: " + searchDistance);
+      console.log("Charger Level: " + searchLevels);
 
-    // remove previous search results from list
-    $locations
-      .empty()
-      .css({
-        height: "76vh",
-      });
+      // remove previous search results from list
+      $locations
+        .empty()
+        .css({
+          height: "76vh",
+        });
 
-    // hide search options (if they are shown)
-    $searchOptions.fadeOut("slow");
+      // hide search options (if they are shown)
+      $searchOptions.fadeOut("slow");
 
-    // geocode address
-      $.get("https://maps.googleapis.com/maps/api/geocode/json?" +
-      "address=" + searchInput +
-      "&key=" + googleKey)
-        .then(function(geoLocation) {
-          console.log(geoLocation);
-          var searchLocation = geoLocation.results[0].geometry.location;
-          return searchLocation;
-        })
-
-      //Take Geocoded address and send to Openchargemap.org api
-
-        .then(function(searchLocation) {
-          adjustMapCenter(map, searchLocation);
-          console.log(searchLocation);
-          var lat = searchLocation.lat;
-          var lng = searchLocation.lng;
-
-          return $.get("https://cors-anywhere.herokuapp.com/http://api.openchargemap.io/v2/poi/?output=json" +
-            "&countrycode=" + "US" +
-            "&maxresults=" + 100 +
-            "&latitude=" + lat +
-            "&longitude=" + lng +
-            "&distance=" + searchDistance +
-            "&distanceunit=Miles" +
-            "&levelid=" + searchLevels);
+      // geocode address
+        $.get("https://maps.googleapis.com/maps/api/geocode/json?" +
+        "address=" + searchInput +
+        "&key=" + googleKey)
+          .then(function(geoLocation) {
+            console.log(geoLocation);
+            var searchLocation = geoLocation.results[0].geometry.location;
+            return searchLocation;
           })
 
-        .then(function(chargersResult){
-          console.log(chargersResult);
+        //Take Geocoded address and send to Openchargemap.org api
 
-          var markers = [];
+          .then(function(searchLocation) {
+            adjustMapCenter(map, searchLocation);
+            console.log(searchLocation);
+            var lat = searchLocation.lat;
+            var lng = searchLocation.lng;
 
-          // loop through charger location results
-          $(chargersResult).map(function(){
+            return $.get("https://cors-anywhere.herokuapp.com/http://api.openchargemap.io/v2/poi/?output=json" +
+              "&countrycode=" + "US" +
+              "&maxresults=" + 100 +
+              "&latitude=" + lat +
+              "&longitude=" + lng +
+              "&distance=" + searchDistance +
+              "&distanceunit=Miles" +
+              "&levelid=" + searchLevels);
+            })
 
-            // manipulated OpenCharger API variables
-            var chargerDist = Math.round( this.AddressInfo.Distance * 10 ) / 10;
+          .then(function(chargersResult){
+            console.log(chargersResult);
 
-            // populate results in handlebars template
-            var source   = $("#charger-location").html();
-            var template = Handlebars.compile(source);
-            var context = {api: this, Distance: chargerDist};
-            var html = template(context);
-            $locations.append(html).hide().fadeIn(800);
+            var markers = [];
 
-            markers.push({
-              id:     this.AddressInfo.ID,
-              LatLng: {
-                lat:    this.AddressInfo.Latitude,
-                lng:    this.AddressInfo.Longitude
-              }
+            // loop through charger location results
+            return $(chargersResult).map(function(){
+
+              // manipulated OpenCharger API variables
+              var chargerDist = Math.round( this.AddressInfo.Distance * 10 ) / 10;
+
+              // populate results in handlebars template
+              var source   = $("#charger-location").html();
+              var template = Handlebars.compile(source);
+              var context = {api: this, Distance: chargerDist};
+              var html = template(context);
+              $locations.append(html).hide().fadeIn(800);
+              markers.push({
+                id:     this.AddressInfo.ID,
+                title: `${this.AddressInfo.Title}`,
+                LatLng: {
+                  lat:    this.AddressInfo.Latitude,
+                  lng:    this.AddressInfo.Longitude
+                }
+              });
+              return markers //needs to retuen outside of here
             });
-            return markers //needs to retuen outside of here
-          });
-        })
+          })
 
-      // Map Marker (need to redo this with array)
-        .then(function(markers){
-          for (var i = 0; i < markers.length; i++) {
-            markers[i] = new google.maps.Marker({
-              position: markers[i].LatLng,
-              map: map,
-              title: markers[i].id
-            });
-          }
-        })
+        // Map Marker (need to redo this with array)
+          .then(function(markers){
+            for (var i = 0; i < markers.length; i++) {
+              markers[i] = new google.maps.Marker({
+                position: markers[i].LatLng,
+                map: map,
+                title: markers[i].title
+              });
+            }
+          })
+    })
+
   })
 
 // center map
