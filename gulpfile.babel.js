@@ -4,6 +4,7 @@ import gulpLoadPlugins from "gulp-load-plugins";
 import browserSync from "browser-sync";
 import del from "del";
 import {stream as wiredep} from "wiredep";
+import debug from 'gulp-debug';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -47,12 +48,13 @@ gulp.task("html", ["styles"], () => {
   const assets = $.useref.assets({searchPath: [".tmp", "app", "."]});
 
   return gulp.src("app/*.html")
+    .pipe(debug())
     .pipe(assets)
     // .pipe($.if('*.js', $.uglify()))
     .pipe($.if("*.css", $.minifyCss({compatibility: "*"})))
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe($.if("*.html", $.minifyHtml({conditionals: true, loose: true})))
+    // .pipe($.if("*.html", $.minifyHtml({conditionals: true, loose: true})))
     .pipe(gulp.dest("dist"));
 });
 
